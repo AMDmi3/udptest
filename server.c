@@ -10,6 +10,10 @@ int main() {
     if ((s = socket(PF_INET, SOCK_DGRAM, 0)) < 0)
         err(1, "socket");
 
+    int yes = 1;
+    if (setsockopt(s, SOL_SOCKET, SO_REUSEPORT, &yes, sizeof(yes)) < 0)
+        err(1, "SO_REUSEPORT");
+
     struct sockaddr_in sin;
     bzero(&sin, sizeof(sin));
     sin.sin_len = sizeof(sin);
